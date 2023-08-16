@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://8.130.120.167:3306/test?useSSL=false&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456 # windows quc@2022@din
+
+# 配置mybatis的规则
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+server:
+  port: 8082

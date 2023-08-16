@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="boot-05-web-admin:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/boot_05_web_admin_jar</output-path>
+    <root id="archive" name="boot-05-web-admin.jar">
+      <element id="module-output" name="boot-05-web-admin" />
+    </root>
+  </artifact>
+</component>

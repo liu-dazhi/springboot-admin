@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 @Data
 public class Content implements Serializable {
-    String id;
-    String name;
+    private String id;
+    private String name;
+    private String groupId;
 }

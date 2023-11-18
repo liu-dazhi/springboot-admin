@@ -1,8 +1,12 @@
 package cn.iu.admin.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
+import lombok.ToString;
+
 
 @Data
+@ToString
 public class User {
     private String id;
 
@@ -10,9 +14,12 @@ public class User {
 
     private String password;
 
-    private Integer role;
+    private String role;
 
     private String groupId;
 
-    private String realName;
+    private String realname;
+
+    @TableField(exist = false)
+    private String iniCode;
 }

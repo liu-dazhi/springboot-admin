@@ -1,5 +1,6 @@
 package cn.iu.admin.controller;
 
+import cn.iu.admin.common.Constant;
 import cn.iu.admin.entity.Content;
 import cn.iu.admin.entity.GroupName;
 import cn.iu.admin.mapper.UserMapper;
@@ -34,7 +35,7 @@ public class IndexController {
     @GetMapping(value = "/getData")
     public Result<List<Content>> getData(@RequestParam(value = "groupId",defaultValue = "") String groupId) {
         QueryWrapper<Content> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("group_id", groupId.equals("") ? "666" : groupId);
+        queryWrapper.eq("group_id", "".equals(groupId) ? Constant.DEFAULTGROUP : groupId);
         List<Content> list = userService.list(queryWrapper);
         return new Result<>(200, "Ok", list);
     }

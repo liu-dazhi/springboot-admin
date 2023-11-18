@@ -8,9 +8,16 @@
         insert into `group_name` value
             (replace(uuid(),'-',''),#{name},#{userid});
     </insert>
+    <insert id="register">
+        insert into `user` value
+            (replace(uuid(),'-',''),#{username},#{password},#{role},null,#{realname});
+    </insert>
 
-    <select id="selectListByUserId" resultType="cn.iu.admin.entity.GroupName">
-        select * from group_name where userid = #{userId};
+    <select id="selectGroupListByUserId" resultType="cn.iu.admin.entity.GroupName">
+        select * from group_name where user_id = #{userId} or user_id = '';
+    </select>
+    <select id="selectUserByUsername" resultType="cn.iu.admin.entity.User">
+        select * from user where username = #{username}
     </select>
 
 

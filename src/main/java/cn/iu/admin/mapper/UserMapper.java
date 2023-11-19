@@ -1,5 +1,6 @@
 package cn.iu.admin.mapper;
 
+import cn.iu.admin.VO.UserVO;
 import cn.iu.admin.entity.Content;
 import cn.iu.admin.entity.GroupName;
 import cn.iu.admin.entity.User;
@@ -13,6 +14,11 @@ public interface UserMapper extends BaseMapper<Content> {
 
     void insertGroupData(GroupName group);
     List<GroupName> selectGroupListByUserId(String userId);
+    GroupName selectGroupListById(String id);
     int register(User user);
     User selectUserByUsername(String username);
+    UserVO selectUserVOByUsername(String username);
+
+    void checkGroup(User user);
+    int countContentByGroupId(User user);
 }

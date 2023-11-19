@@ -1,5 +1,6 @@
 package cn.iu.admin.service.impl;
 
+import cn.iu.admin.VO.UserVO;
 import cn.iu.admin.common.Constant;
 import cn.iu.admin.entity.Content;
 import cn.iu.admin.entity.GroupName;
@@ -15,6 +16,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,7 +31,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Content> implements
 
     @Override
     public List<GroupName> getGroupData(User user) {
-        return userMapper.selectGroupListByUserId(user.getId());
+        return userMapper.selectGroupListByUserId(ObjectUtils.isEmpty(user) ? "" : user.getId());
     }
 
     @Override
@@ -48,7 +51,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Content> implements
     }
 
     @Override
-    public User login(User user) {
+    public User login(User user, HttpServletRequest request) {
         if (ObjectUtils.isEmpty(user) || StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())){
             throw new BusinessException("参数缺失，账户名或密码不能为空");
         }
@@ -59,8 +62,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Content> implements
         if (!passwordEncoder.matches(user.getPassword(), num.getPassword())){
             throw new BusinessException("用户名或密码错误，请重新输入");
         }
+        GroupName groupName = userMapper.selectGroupListById(num.getGroupId());
+        num.setGroupName(ObjectUtils.isEmpty(groupName) ? "" : groupName.getName());
+        request.getSession().setAttribute("user", num);
+
         return num;
     }
 
+    @Override
+    public void checkGroup(User user) {
+        if (userMapper.countContentByGroupId(user) < 1){
+            throw new BusinessException("该分组无数据，无法选择");
+        }
+        userMapper.checkGroup(user);
+    }
+
+    @Override
+    public GroupName selectGroupListById(String id) {
+        return userMapper.selectGroupListById(id);
+    }
+
+    @Override
+    public UserVO selectUserVOByUsername(String username) {
+        return userMapper.selectUserVOByUsername(username);
+    }
 
 }

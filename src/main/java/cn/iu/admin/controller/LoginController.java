@@ -1,5 +1,6 @@
 package cn.iu.admin.controller;
 
+import cn.iu.admin.VO.UserVO;
 import cn.iu.admin.common.Constant;
 import cn.iu.admin.entity.Content;
 import cn.iu.admin.entity.User;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static cn.iu.admin.exception.BusinessException.throwExceptionWithNull;
@@ -36,9 +39,18 @@ public class LoginController {
         }
 
     }
-    @GetMapping("/login")
-    public Result<?> login(@RequestBody User user) {
-        User login = userService.login(user);
+    @PostMapping("/login")
+    public Result<?> login(@RequestBody User user, HttpServletRequest request) {
+        User login = userService.login(user, request);
         return Result.ok("登陆成功",login);
     }
+
+    @GetMapping("/checkLogin")
+    public Result<?> checkLogin(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        UserVO userVO = userService.selectUserVOByUsername(ObjectUtils.isEmpty(user) ? "" : user.getUsername());
+        return Result.ok(userVO);
+    }
+
 }

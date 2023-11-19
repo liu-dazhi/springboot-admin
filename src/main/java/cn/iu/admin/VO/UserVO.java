@@ -1,13 +1,10 @@
-package cn.iu.admin.entity;
+package cn.iu.admin.VO;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
-import lombok.ToString;
-
 
 @Data
-@ToString
-public class User {
+public class UserVO {
     private String id;
 
     private String username;

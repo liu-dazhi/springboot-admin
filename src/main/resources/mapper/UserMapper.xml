@@ -12,12 +12,26 @@
         insert into `user` value
             (replace(uuid(),'-',''),#{username},#{password},#{role},null,#{realname});
     </insert>
+    <update id="checkGroup">
+        update user set group_id = #{groupId} where id = #{id}
+    </update>
 
     <select id="selectGroupListByUserId" resultType="cn.iu.admin.entity.GroupName">
         select * from group_name where user_id = #{userId} or user_id = '';
     </select>
+
+    <select id="selectGroupListById" resultType="cn.iu.admin.entity.GroupName">
+        select * from group_name where id = #{id};
+    </select>
+
     <select id="selectUserByUsername" resultType="cn.iu.admin.entity.User">
         select * from user where username = #{username}
+    </select>
+    <select id="countContentByGroupId" resultType="java.lang.Integer">
+        select count(*) from content where group_id = #{groupId}
+    </select>
+    <select id="selectUserVOByUsername" resultType="cn.iu.admin.VO.UserVO">
+        select *,gn.name as groupName from user u left join group_name gn on u.group_id = gn.id where username = #{username}
     </select>
 
 

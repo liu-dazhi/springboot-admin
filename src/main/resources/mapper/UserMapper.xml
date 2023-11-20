@@ -6,7 +6,7 @@
 
     <insert id="insertGroupData">
         insert into `group_name` value
-            (replace(uuid(),'-',''),#{name},#{userid});
+            (replace(uuid(),'-',''),#{name},#{userId});
     </insert>
     <insert id="register">
         insert into `user` value
